@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import styled, {keyframes} from "styled-components";
 import { useRouter } from 'next/router';
+import { useStateContext } from '@/context/StateContext';
 
 
 
@@ -18,9 +19,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
+  const {user, setUser} = useStateContext();
 
   function handleButtonClick() {
-    router.push('/Login');
+    if (user != null) {
+      router.push('/MusicNFT');}
+      else{
+        router.push('/Login');;
+      }
+    
   }
   return (
     <>
@@ -49,10 +56,10 @@ export default function Home() {
             <FontAwesomeIcon icon={faYoutube} />
           </Face1>
           <Face2>
-            <FontAwesomeIcon icon={faSoundcloud} />
+            <FontAwesomeIcon icon={faYoutube} />
           </Face2>
           <Face3>
-            <FontAwesomeIcon icon={faSoundcloud} />
+            <FontAwesomeIcon rotation={45} icon={faSoundcloud} />
           </Face3>
           <Face4>
             <FontAwesomeIcon icon={faSpotify} />
@@ -73,7 +80,7 @@ export default function Home() {
 
 const Container = styled.div`
   width: 100vw;
-  background-color: #12a9e0;
+  background-color: #022c43;
   padding: 0;
   height: 20;
   height: 89.5vh;
@@ -163,7 +170,7 @@ const Face1 = styled(Face)`
   color: #dd0031;
 `;
 const Face2 = styled(Face)`
-  transform: rotateY(90deg) translateZ(100px);
+  transform: rotateY(90deg) translateZ(100px) rotateZ(270deg);
   color: #f06529;
 `;
 const Face3 = styled(Face)`

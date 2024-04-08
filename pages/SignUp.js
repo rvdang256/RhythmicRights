@@ -24,7 +24,7 @@ export default function SignUp() {
       const user = userCredential.user;
       // ...
       console.log(`User ${user.email} is signed in up`)
-      router.push('/loginPage');
+      router.push('/Login');
 
     })
     .catch((error) => {
@@ -53,7 +53,7 @@ export default function SignUp() {
           <ForgotPassword>
             <a href="/Login">Log In</a>
           </ForgotPassword>
-          <SubmitButton>SIGN UP</SubmitButton>
+          <SubmitButton onClick={handleSignUpClick}>SIGN UP</SubmitButton>
         </Form>
       </Left>
       <Right />

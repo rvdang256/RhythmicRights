@@ -18,12 +18,18 @@ const Navbar = () => {
   }
 
   function handleMusicClick() {
-    router.push('/MusicNFT');
+    if (user != null) {
+      router.push('/MusicNFT');}
+      else{
+        router.push('/Login');
+      }
+    
 
   }
 
-  function handleVideoClick() {
-    router.push('/VideoNFT');
+  function handleSignOutClick(){
+    setUser(null);
+    router.push('/');
 
   }
 
@@ -44,7 +50,7 @@ const Navbar = () => {
           <NavigationElement onClick={handleMusicClick}>Music NFT</NavigationElement>
           {/* <NavigationElement onClick={handleVideoClick}>Video NFT</NavigationElement> */}
           {user && 
-          <LoginButton>Sign Out</LoginButton>}
+          <LoginButton onClick={handleSignOutClick}>Sign Out</LoginButton>}
           {user != null ?
           <User>{user.email}</User>
           : // no logged in user
