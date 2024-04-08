@@ -188,7 +188,7 @@ const Face4 = styled(Face)`
 `;
 const Face5 = styled(Face)`
   transform: rotateY(-90deg) rotateZ(90deg) translateZ(100px);
-  color: white;
+  color: #aa6bed;
 `;
 const Face6 = styled(Face)`
   transform: rotateX(-90deg) translateZ(100px);
