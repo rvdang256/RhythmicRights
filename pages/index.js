@@ -13,6 +13,11 @@ import styled, {keyframes} from "styled-components";
 import { useRouter } from 'next/router';
 import { useStateContext } from '@/context/StateContext';
 
+import {
+  faHeadphones,
+  faMusic
+} from '@fortawesome/free-solid-svg-icons'
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -53,22 +58,22 @@ export default function Home() {
         <StageCubeContainer>
         <CubeSpinner>
           <Face1>
-            <FontAwesomeIcon icon={faYoutube} />
+            <FontAwesomeIcon icon={faSoundcloud} />
           </Face1>
           <Face2>
-            <FontAwesomeIcon icon={faYoutube} />
+            <FontAwesomeIcon icon={faSpotify} />
           </Face2>
           <Face3>
-            <FontAwesomeIcon rotation={45} icon={faSoundcloud} />
+            <FontAwesomeIcon icon={faNapster} />
           </Face3>
           <Face4>
-            <FontAwesomeIcon icon={faSpotify} />
+            <FontAwesomeIcon icon={faYoutube} />
           </Face4>
           <Face5>
-            <FontAwesomeIcon icon={faNapster} />
+            <FontAwesomeIcon icon={faHeadphones} />
           </Face5>
           <Face6>
-            <FontAwesomeIcon icon={faSpotify} />
+            <FontAwesomeIcon icon={faMusic} />
           </Face6>
         </CubeSpinner>
       </StageCubeContainer>
@@ -167,27 +172,27 @@ const Face = styled.div`
 
 const Face1 = styled(Face)`
   transform: translateZ(100px);
-  color: #dd0031;
+  color: orange;
 `;
 const Face2 = styled(Face)`
   transform: rotateY(90deg) translateZ(100px) rotateZ(270deg);
-  color: #f06529;
+  color: green;
 `;
 const Face3 = styled(Face)`
   transform: rotateY(90deg) rotateX(90deg) translateZ(100px);
-  color: #28a4d9;
+  color: blue;
 `;
 const Face4 = styled(Face)`
   transform: rotateY(180deg) rotateZ(90deg) translateZ(100px);
-  color: green;
+  color: red;
 `;
 const Face5 = styled(Face)`
   transform: rotateY(-90deg) rotateZ(90deg) translateZ(100px);
-  color: #efd81d;
+  color: white;
 `;
 const Face6 = styled(Face)`
   transform: rotateX(-90deg) translateZ(100px);
-  color: #ec4d28;
+  color: #ffd700;
 `;
 
 const CustomButton = styled.button`
