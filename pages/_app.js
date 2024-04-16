@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { StateContext } from "@/context/StateContext";
-import Navbar from "@/components/Navbar";
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+} from "@thirdweb-dev/react";
 export const GlobalStyle = createGlobalStyle`
 *{
 
@@ -12,7 +17,18 @@ export const GlobalStyle = createGlobalStyle`
 
 export default function App({ Component, pageProps }) {
   return(
-    <>
+    
+    <ThirdwebProvider
+      supportedWallets={[
+        metamaskWallet({
+          recommended: true,
+        }),
+        coinbaseWallet(),
+        walletConnect(),
+      ]}
+      clientId="d54e8aaf1f167dbfd847c6ea03edce74"
+    >
+    
       <GlobalStyle/>
       
   
@@ -21,7 +37,7 @@ export default function App({ Component, pageProps }) {
 
       </StateContext>
     
-    </>
+      </ThirdwebProvider>
 
 
   );

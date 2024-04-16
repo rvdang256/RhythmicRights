@@ -33,6 +33,10 @@ const Navbar = () => {
 
   }
 
+  function handleVideoClick() {
+    router.push('/VideoNFT');
+  }
+
   
 
 
@@ -48,7 +52,7 @@ const Navbar = () => {
           
           <NavigationElement onClick={handleHomeClick}>Home</NavigationElement>
           <NavigationElement onClick={handleMusicClick}>Music NFT</NavigationElement>
-          {/* <NavigationElement onClick={handleVideoClick}>Video NFT</NavigationElement> */}
+          <NavigationElement onClick={handleVideoClick}>Video NFT</NavigationElement>
           {user && 
           <LoginButton onClick={handleSignOutClick}>Sign Out</LoginButton>}
           {user != null ?

@@ -1,6 +1,18 @@
 import React from "react";
 import styled from 'styled-components';
 import Navbar from "@/components/Navbar";
+import { ConnectWallet } from "@thirdweb-dev/react";
+
+import { darkTheme, lightTheme } from "@thirdweb-dev/react";
+ 
+const customDarkTheme = darkTheme({
+  fontFamily: "Inter, sans-serif",
+  colors: {
+    modalBg: "#000000",
+    accentText: "red",
+  },
+});
+
 export default function VideoNFT() {
 return (
 
@@ -8,46 +20,14 @@ return (
 
 <>
 <Navbar/>
-<StyledBackground>
-      <StyledOverlay />
-      <StyledFormContainer>
-        <div className="text-center">
-          <StyledTitle>File Upload!</StyledTitle>
-          <StyledDescription>Lorem ipsum is placeholder text.</StyledDescription>
-        </div>
-        <StyledForm>
-          <div>
-            <StyledInputLabel htmlFor="title">Title</StyledInputLabel>
-            <StyledInput id="title" type="text" placeholder="mail@gmail.com" />
-          </div>
-          <div>
-            <StyledFileInputLabel htmlFor="file">Attach Document</StyledFileInputLabel>
-            <StyledFileInputContainer>
-              <StyledFileInputWrapper>
-                <div>
-                  <img
-                    src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
-                    alt="freepik image"
-                    style={{ height: '9rem', width: 'auto' }}
-                  />
-                </div>
-                <StyledFileInputText>
-                  Drag and drop files here <br /> or <a href="#/">select a file</a> from your computer
-                </StyledFileInputText>
-                <StyledFileInput type="file" id="file" />
-              </StyledFileInputWrapper>
-            </StyledFileInputContainer>
-          </div>
-          <p className="text-sm text-gray-300">
-            <span>File type: doc, pdf, types of images</span>
-          </p>
-          <div>
-            <StyledButton>Upload</StyledButton>
-          </div>
-        </StyledForm>
-      </StyledFormContainer>
-    </StyledBackground>
+<div>
 
+
+<ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}
+detailsBtn={() => {
+    return <StyledButton> Connect </StyledButton>;
+  }}/>
+</div>
 </>
 
 
