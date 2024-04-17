@@ -2,6 +2,8 @@ import React from "react";
 import styled from 'styled-components';
 import Navbar from "@/components/Navbar";
 import { ConnectWallet } from "@thirdweb-dev/react";
+import { useStorageUpload } from "@thirdweb-dev/react";
+import { useState } from "react";
 
 import { darkTheme, lightTheme } from "@thirdweb-dev/react";
  
@@ -13,7 +15,23 @@ const customDarkTheme = darkTheme({
   },
 });
 
+
+
 export default function VideoNFT() {
+  const { mutateAsync: upload, isLoading } = useStorageUpload();
+
+const [file, setFile] = useState(null);
+async function uploadData() {
+  const uris = await upload({ 
+    data: [file], 
+    options: {
+      uploadWithGatewayUrl: true,
+      uploadWithoutDirectory: true
+
+    }
+  });
+  console.log(uris[0]);
+}
 return (
 
 
@@ -27,6 +45,14 @@ return (
 detailsBtn={() => {
     return <StyledButton> Connect </StyledButton>;
   }}/>
+
+<input type="file" onChange={(e) => {
+  if(e.target.files){
+    setFile(e.target.files[0]);
+  }
+}}/>
+<button onClick={uploadData}>upload</button>
+
 </div>
 </>
 
