@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
         walletConnect(),
       ]}
       clientId="d54e8aaf1f167dbfd847c6ea03edce74"
-      activeChain="sepolia"
+      activeChain="binance-testnet"
 
     >
     

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from 'styled-components';
 import Navbar from "@/components/Navbar";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, useSigner, useStorage, useAddress} from "@thirdweb-dev/react";
 import { useStorageUpload } from "@thirdweb-dev/react";
 import { useState } from "react";
+import { ethers } from "ethers";
 
 import { darkTheme, lightTheme } from "@thirdweb-dev/react";
  
@@ -18,7 +19,19 @@ const customDarkTheme = darkTheme({
 
 
 export default function VideoNFT() {
-  const { mutateAsync: upload, isLoading } = useStorageUpload();
+const { mutateAsync: upload, isLoading } = useStorageUpload();
+const Signer = useSigner();
+const storage = useStorage();
+
+useEffect(() => {
+  
+  if(!Signer) {return}
+//need to get the contract address after deployed, and abi
+//const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", abi, Signer);
+//storage
+//contract.invest
+
+})
 
 const [file, setFile] = useState(null);
 async function uploadData() {
