@@ -2,8 +2,9 @@ import React from "react";
 import styled from 'styled-components';
 import Navbar from "@/components/Navbar";
 import { Pane, FileUploader, FileCard } from 'evergreen-ui';
-import { useStorageUpload, useStorage } from "@thirdweb-dev/react";
+import { useStorageUpload, useStorage, useSigner } from "@thirdweb-dev/react";
 import { useState } from "react";
+import { ethers } from "ethers";
 
 
 export default function MusicNFT() {
@@ -11,6 +12,7 @@ export default function MusicNFT() {
     const [track, setTrack] = useState('')
     const [artist, setArtist] = useState('')
     const [year, setYear] = useState('')
+    const signer = useSigner();
     
   
     const [audioFiles, setAudioFiles] = React.useState([])
@@ -35,34 +37,40 @@ export default function MusicNFT() {
 
   const { mutateAsync: upload, isLoading } = useStorageUpload();
 
-  const storage = useStorage();
+
 
 
 
   async function uploadData() {
-    if(audioFiles.length === 0 || visualFiles.length === 0 || track === '' || artist === '' || year === '') {
-      alert('Please upload a file')
-    }else{
+    try{
+      if(audioFiles.length === 0 || visualFiles.length === 0 || track === '' || artist === '' || year === '') {
+        alert('Please upload a file')
+      }else{
 
-      const metadata = {
-        name: track,
-        artist: artist,
-        year: year,
-        audio: audioFiles[0],
-        visual: visualFiles[0]
+        const metadata = {
+          name: track,
+          artist: artist,
+          year: year,
+          audio: audioFiles[0],
+          visual: visualFiles[0]
+        }
+        
+        const uris = await upload({ 
+          data: [metadata], 
+          options: {
+            uploadWithGatewayUrl: true,
+            uploadWithoutDirectory: false
+
+          }
+        });
+        
+        console.log(uris[0]);
+        const contract = new ethers.Contract(Traderiod_NFT_CONTRACT_ADDRESS, TradioABI, signer);
       }
+    }catch(err){
+      console.log(err)
       
-    const uris = await upload({ 
-      data: [metadata], 
-      options: {
-        uploadWithGatewayUrl: true,
-        uploadWithoutDirectory: false
-
-      }
-    });
-    
-    console.log(uris[0]);
-    }
+  }
   }
   
   return (
