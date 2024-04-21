@@ -5,10 +5,12 @@ import { Pane, FileUploader, FileCard } from 'evergreen-ui';
 import { useStorageUpload, useStorage, useSigner } from "@thirdweb-dev/react";
 import { useState } from "react";
 import { ethers } from "ethers";
+import NFT from '@/abi/NFT.json';
 
 
 export default function MusicNFT() {
 
+    const contractAdress = "0x0480Add3a7f7FeCb894325b19c19a7a9D35BF33c";
     const [track, setTrack] = useState('')
     const [artist, setArtist] = useState('')
     const [year, setYear] = useState('')
@@ -65,7 +67,10 @@ export default function MusicNFT() {
         });
         
         console.log(uris[0]);
-        const contract = new ethers.Contract(Traderiod_NFT_CONTRACT_ADDRESS, TradioABI, signer);
+        const contract = new ethers.Contract(contractAdress, NFT, signer);
+        const tx = await contract.safeMint(uris[0]);
+        await tx.wait();
+        console.log("NFT Minted!");
       }
     }catch(err){
       console.log(err)
