@@ -1,5 +1,5 @@
 import React from "react";
-import styled from 'styled-components';
+import {styled, keyframes} from 'styled-components';
 import Navbar from "@/components/Navbar";
 import { Pane, FileUploader, FileCard } from 'evergreen-ui';
 import { useStorageUpload, useStorage, useSigner } from "@thirdweb-dev/react";
@@ -14,6 +14,7 @@ export default function MusicNFT() {
     const [track, setTrack] = useState('')
     const [artist, setArtist] = useState('')
     const [year, setYear] = useState('')
+    const [loading, setLoading] = useState(false)
     const signer = useSigner();
     
   
@@ -48,6 +49,7 @@ export default function MusicNFT() {
       if(audioFiles.length === 0 || visualFiles.length === 0 || track === '' || artist === '' || year === '') {
         alert('Please upload a file')
       }else{
+        setLoading(true);
 
         const metadata = {
           name: track,
@@ -67,13 +69,17 @@ export default function MusicNFT() {
         });
         
         console.log(uris[0]);
+        
         const contract = new ethers.Contract(contractAdress, NFT, signer);
         const tx = await contract.safeMint(uris[0]);
         await tx.wait();
         console.log("NFT Minted!");
+        alert('NFT Minted!')
+        setLoading(false);
       }
     }catch(err){
       console.log(err)
+      setLoading(false);
       
   }
   }
@@ -82,80 +88,84 @@ export default function MusicNFT() {
     <>
     <Navbar/>
     <Container>
-      <LoginForm>
-        <Title>Create NFT</Title>
-
-          <Input placeholder ="Track" onChange={(e) => setTrack(e.target.value)}/>
-
-
-          <Input placeholder ="Artist" onChange={(e) => setArtist(e.target.value)}/>
-
-
-          <Input placeholder ="Year" onChange={(e) => setYear(e.target.value)}/>
-
+    
+      {loading == false ? (
+        <LoginForm>
         
+          <Title>Create NFT</Title>
+    
+            <Input placeholder ="Track" onChange={(e) => setTrack(e.target.value)}/>
+    
+            <Input placeholder ="Artist" onChange={(e) => setArtist(e.target.value)}/>
+    
+            <Input placeholder ="Year" onChange={(e) => setYear(e.target.value)}/>
+    
+          <Pane maxWidth={5000}>
+            <FileUploader
+              label="Upload Audio File"
+              description="You can upload 1 file. File can be up to 50 MB."
+              maxSizeInBytes={50 * 1024 ** 2}
+              acceptedMimeTypes = {['.pdf', '.oga', '.aac', '.mp3']}
+              maxFiles={1}
+              onChange={handleChange}
+              onRejected={handleRejected}
+              renderFile={(file) => {
+                const { name, size, type } = file
+                return (
+                  <FileCard
+                    key={name}
+                    name={name}
+                    onRemove={handleRemove}
+                    sizeInBytes={size}
+                    type={type}
+                  />
+                )
+              }}
+              values={audioFiles}
+            />
+    
+            <FileUploader
+              label="Upload Visual File"
+              description="You can upload 1 file. File can be up to 50 MB."
+              maxSizeInBytes={50 * 1024 ** 2}
+              acceptedMimeTypes = {['.png', '.jpg', '.jpeg']}
+              maxFiles={1}
+              onChange={handleVisualChange}
+              onRejected={handleVisualRejected}
+              renderFile={(file) => {
+                const { name, size, type } = file
+                return (
+                  <FileCard
+                    key={name}
+                    name={name}
+                    onRemove={handleVisualRemove}
+                    sizeInBytes={size}
+                    type={type}
+                  />
+                )
+              }}
+              values={visualFiles}
+            />
+          </Pane>
+    
+          <LoginButton onClick={uploadData}>Upload</LoginButton>
+          </LoginForm>
+        
+      ) :
       
-        <Pane maxWidth={5000}>
-      <FileUploader
-        label="Upload Audio File"
-        description="You can upload 1 file. File can be up to 50 MB."
-        maxSizeInBytes={50 * 1024 ** 2}
-        acceptedMimeTypes = {['.pdf', '.oga', '.aac', '.mp3']}
-        maxFiles={1}
-        onChange={handleChange}
-        onRejected={handleRejected}
-        renderFile={(file) => {
-          const { name, size, type } = file
-          //const fileRejection = fileRejections.find((fileRejection) => fileRejection.file === file)
-          //const { message } = fileRejection || {}
-          return (
-            <FileCard
-              key={name}
-              //isInvalid={fileRejection != null}
-              name={name}
-              onRemove={handleRemove}
-              sizeInBytes={size}
-              type={type}
-              //validationMessage={message}
-            />
-          )
-        }}
-        values={audioFiles}
-      />
-
-      <FileUploader
-        label="Upload Visual File"
-        description="You can upload 1 file. File can be up to 50 MB."
-        maxSizeInBytes={50 * 1024 ** 2}
-        acceptedMimeTypes = {['.png', '.jpg', '.jpeg']}
-        maxFiles={1}
-        onChange={handleVisualChange}
-        onRejected={handleVisualRejected}
-        renderFile={(file) => {
-          const { name, size, type } = file
-          //const fileRejection = fileRejections.find((fileRejection) => fileRejection.file === file)
-          //const { message } = fileRejection || {}
-          return (
-            <FileCard
-              key={name}
-              //isInvalid={fileRejection != null}
-              name={name}
-              onRemove={handleVisualRemove}
-              sizeInBytes={size}
-              type={type}
-              //validationMessage={message}
-            />
-          )
-        }}
-        values={visualFiles}
-      />
-    </Pane>
-
-    <LoginButton onClick={uploadData}>Upload</LoginButton>
- 
-
-
-      </LoginForm>
+            <LdsGrid>
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+              <LdsGridItem />
+            </LdsGrid>
+            }
+      
     </Container>
     </>
         
@@ -220,12 +230,74 @@ const LoginButton = styled.button`
   }
 `;
 
-const SignUp = styled.h1`
+const ldsGridAnimation = keyframes`
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+`;
 
-font-size: 15px;
-margin-top: 55px;
-margin-left: 280px;
-color: gray; /* Sets the text color to gray */
-text-decoration: underline;
-cursor: pointer;
+const LdsGrid = styled.div`
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  width: 160px; /* Increased width */
+  height: 160px; /* Increased height */
+`;
+
+const LdsGridItem = styled.div`
+  position: absolute;
+  width: 32px; /* Increased width */
+  height: 32px; /* Increased height */
+  border-radius: 50%;
+  background: currentColor;
+  animation: ${ldsGridAnimation} 1.2s linear infinite;
+
+  &:nth-child(1) {
+    top: 16px; /* Adjusted position */
+    left: 16px; /* Adjusted position */
+    animation-delay: 0s;
+  }
+  &:nth-child(2) {
+    top: 16px; /* Adjusted position */
+    left: 64px; /* Adjusted position */
+    animation-delay: -0.4s;
+  }
+  &:nth-child(3) {
+    top: 16px; /* Adjusted position */
+    left: 112px; /* Adjusted position */
+    animation-delay: -0.8s;
+  }
+  &:nth-child(4) {
+    top: 64px; /* Adjusted position */
+    left: 16px; /* Adjusted position */
+    animation-delay: -0.4s;
+  }
+  &:nth-child(5) {
+    top: 64px; /* Adjusted position */
+    left: 64px; /* Adjusted position */
+    animation-delay: -0.8s;
+  }
+  &:nth-child(6) {
+    top: 64px; /* Adjusted position */
+    left: 112px; /* Adjusted position */
+    animation-delay: -1.2s;
+  }
+  &:nth-child(7) {
+    top: 112px; /* Adjusted position */
+    left: 16px; /* Adjusted position */
+    animation-delay: -0.8s;
+  }
+  &:nth-child(8) {
+    top: 112px; /* Adjusted position */
+    left: 64px; /* Adjusted position */
+    animation-delay: -1.2s;
+  }
+  &:nth-child(9) {
+    top: 112px; /* Adjusted position */
+    left: 112px; /* Adjusted position */
+    animation-delay: -1.6s;
+  }
 `;

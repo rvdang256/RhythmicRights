@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from 'styled-components';
+import {styled, keyframes} from 'styled-components';
 import Navbar from "@/components/Navbar";
 import { ConnectWallet, useSigner, useStorage, usedo} from "@thirdweb-dev/react";
 import { useStorageUpload } from "@thirdweb-dev/react";
@@ -57,14 +57,23 @@ return (
 <div>
 
 
-<ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}
-detailsBtn={() => {
-    return <StyledButton> Connect </StyledButton>;
-  }}/>
+<ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
 
   <button onClick={uploadData}>Upload</button>
 
   {image && <img src={image} alt="Image" />}
+
+  <LdsGrid>
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+      <LdsGridItem />
+    </LdsGrid>
 
 </div>
 </>
@@ -74,118 +83,74 @@ detailsBtn={() => {
 
 }
 
-const StyledBackground = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #d1d5db;
-  padding: 12px;
-  background-image: url('https://images.unsplash.com/photo-1621243804936-775306a8f2e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+const ldsGridAnimation = keyframes`
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 `;
 
-const StyledOverlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.6);
+const LdsGrid = styled.div`
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+`;
+
+const LdsGridItem = styled.div`
   position: absolute;
-  inset: 0;
-`;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: ${ldsGridAnimation} 1.2s linear infinite;
 
-const StyledFormContainer = styled.div`
-  max-width: 30rem;
-  padding: 2.5rem;
-  background-color: #fff;
-  border-radius: 1rem;
-  position: relative;
-  z-index: 10;
-`;
-
-const StyledTitle = styled.h2`
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: #1f2937;
-`;
-
-const StyledDescription = styled.p`
-  font-size: 0.875rem;
-  color: #9ca3af;
-`;
-
-const StyledForm = styled.form`
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const StyledInputLabel = styled.label`
-  font-size: 0.875rem;
-  font-weight: bold;
-  color: #6b7280;
-`;
-
-const StyledInput = styled.input`
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  outline: none;
-  transition: border-color 0.3s ease-in-out;
-
-  &:focus {
-    border-color: #6366f1;
+  &:nth-child(1) {
+    top: 8px;
+    left: 8px;
+    animation-delay: 0s;
   }
-`;
-
-const StyledFileInputLabel = styled(StyledInputLabel)`
-  display: block;
-`;
-
-const StyledFileInputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledFileInput = styled.input`
-  display: none;
-`;
-
-const StyledFileInputWrapper = styled.label`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 4px dashed #e5e7eb;
-  border-radius: 0.75rem;
-  width: 100%;
-  height: 15rem;
-  cursor: pointer;
-
-  &:hover {
-    border-color: #6366f1;
+  &:nth-child(2) {
+    top: 8px;
+    left: 32px;
+    animation-delay: -0.4s;
   }
-`;
-
-const StyledFileInputText = styled.p`
-  color: #6b7280;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  cursor: pointer;
-`;
-
-const StyledButton = styled.button`
-  margin-top: 1.25rem;
-  background-color: #3b82f6;
-  color: #fff;
-  padding: 1rem;
-  border-radius: 9999px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-
-  &:hover {
-    background-color: #2563eb;
+  &:nth-child(3) {
+    top: 8px;
+    left: 56px;
+    animation-delay: -0.8s;
+  }
+  &:nth-child(4) {
+    top: 32px;
+    left: 8px;
+    animation-delay: -0.4s;
+  }
+  &:nth-child(5) {
+    top: 32px;
+    left: 32px;
+    animation-delay: -0.8s;
+  }
+  &:nth-child(6) {
+    top: 32px;
+    left: 56px;
+    animation-delay: -1.2s;
+  }
+  &:nth-child(7) {
+    top: 56px;
+    left: 8px;
+    animation-delay: -0.8s;
+  }
+  &:nth-child(8) {
+    top: 56px;
+    left: 32px;
+    animation-delay: -1.2s;
+  }
+  &:nth-child(9) {
+    top: 56px;
+    left: 56px;
+    animation-delay: -1.6s;
   }
 `;
