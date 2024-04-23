@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import styled from 'styled-components';
 import Navbar from "@/components/Navbar";
-import { ConnectWallet, useSigner, useStorage, useAddress} from "@thirdweb-dev/react";
+import { ConnectWallet, useSigner, useStorage, usedo} from "@thirdweb-dev/react";
 import { useStorageUpload } from "@thirdweb-dev/react";
 import { useState } from "react";
 import { ethers } from "ethers";
+import NFT from '@/abi/NFT.json';
 
 import { darkTheme, lightTheme } from "@thirdweb-dev/react";
  
@@ -19,31 +20,33 @@ const customDarkTheme = darkTheme({
 
 
 export default function VideoNFT() {
-const { mutateAsync: upload, isLoading } = useStorageUpload();
-const Signer = useSigner();
+const [image, setImage] = useState(null);
+const signer = useSigner();
 const storage = useStorage();
+const contractAdress = "0x0480Add3a7f7FeCb894325b19c19a7a9D35BF33c";
 
-useEffect(() => {
-  
-  if(!Signer) {return}
-//need to get the contract address after deployed, and abi
-//const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", abi, Signer);
-//storage
-//contract.invest
 
-})
+
 
 const [file, setFile] = useState(null);
 async function uploadData() {
-  const uris = await upload({ 
-    data: [file], 
-    options: {
-      uploadWithGatewayUrl: true,
-      uploadWithoutDirectory: true
+  try {
+  const contract = new ethers.Contract(contractAdress, NFT, signer);
+  const URI = await contract.getAllTokenURIs();
+  console.log(URI[0]);
+  if(!URI[0]){
+    alert('Boof')
+  }else{
+    const data = await storage.download(URI[0]);
+    const metadataResponse = await fetch(data.url);
+    const metadata = await metadataResponse.json();
+    console.log(metadata);
+    setImage(metadata.visual);
+  }
+}catch (error) {
+  console.log(error);
 
-    }
-  });
-  console.log(uris[0]);
+  }
 }
 return (
 
@@ -59,12 +62,9 @@ detailsBtn={() => {
     return <StyledButton> Connect </StyledButton>;
   }}/>
 
-<input type="file" onChange={(e) => {
-  if(e.target.files){
-    setFile(e.target.files[0]);
-  }
-}}/>
-<button onClick={uploadData}>upload</button>
+  <button onClick={uploadData}>Upload</button>
+
+  {image && <img src={image} alt="Image" />}
 
 </div>
 </>
