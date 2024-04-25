@@ -66,9 +66,9 @@ return (
 <Navbar/>
 
 <Wrapper>
-<ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
+{/* <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/> */}
 
-  <button onClick={uploadData}>Upload</button>
+  <button onClick={uploadData}>See NFTs</button>
 
 
 
@@ -76,7 +76,7 @@ return (
   
     
       <CardWrapper>
-        <Card>
+        {/* <Card>
           <CardFront className="card-front">
             <CardImage src="https://image.tmdb.org/t/p/original/lr3cYNDlJcpT1EWzFH42aSIvkab.jpg" alt="Dune: Part One (2021) movie poster" />
           </CardFront>
@@ -105,7 +105,7 @@ return (
             </CardDescription>
           </CardBack>
         </Card>
-      
+       */}
     
 
     {NFTs && NFTs.map((nft, index) => (
@@ -142,20 +142,21 @@ return (
 }
 
 const Wrapper = styled.div`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+
 
   
     display: grid;
     place-items: center;
-    height: 100vh;
+    height: 105vh;
     font-family: system-ui;
-    background-image: url('https://image.tmdb.org/t/p/original/lzWHmYdfeFiMIY4JaMmtR7GEli3.jpg');
+    background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80');
     background-size: cover;
     background-position: center;
+    backdrop-filter: blur(4px);
+    
+    
+    
+    
 
   }
 `;
@@ -164,6 +165,8 @@ const CardWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+
+  
 `;
 
 const Card = styled.div`

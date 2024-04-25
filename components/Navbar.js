@@ -2,8 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStateContext } from '@/context/StateContext';
+import { ConnectWallet, useSigner, useStorage, usedo} from "@thirdweb-dev/react";
+
+import { darkTheme, lightTheme } from "@thirdweb-dev/react";
+ 
+const customDarkTheme = darkTheme({
+  fontFamily: "Inter, sans-serif",
+  colors: {
+    modalBg: "#000000",
+    accentText: "blue",
+  },
+});
+
+
 
 const Navbar = () => {
+  
   
   const {user, setUser} = useStateContext();
   const router = useRouter();
@@ -60,6 +74,7 @@ const Navbar = () => {
           : // no logged in user
           <LoginButton onClick={handleLoginClick}>Login</LoginButton>}
         </NavigationButtonHolder>
+        <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
         
       </Holder>
     </Container>
