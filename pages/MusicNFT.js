@@ -105,7 +105,7 @@ export default function MusicNFT() {
               label="Upload Audio File"
               description="You can upload 1 file. File can be up to 50 MB."
               maxSizeInBytes={50 * 1024 ** 2}
-              acceptedMimeTypes = {['.pdf', '.oga', '.aac', '.mp3']}
+              acceptedMimeTypes = {[ '.oga', '.aac', '.mp3']}
               maxFiles={1}
               onChange={handleChange}
               onRejected={handleRejected}
