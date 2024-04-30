@@ -73,7 +73,7 @@ return (
 
 <Heading>See Your Minted NFTs!</Heading>
 
-  <button onClick={uploadData}></button>
+  
   <Button onClick={uploadData}>See NFTs</Button>
 
 
@@ -155,7 +155,7 @@ color: white;
 
 `;
 
-const SearchButton = styled.button`
+const Button = styled.button`
   --b: 3px;   /* border thickness */
   --s: .15em; /* size of the corner */
   --c: #12a9e0;
