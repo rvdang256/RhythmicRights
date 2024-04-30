@@ -25,7 +25,7 @@ const [NFTs, setNFTs] = useState(null);
 const [track, setTrack] = useState('')
 const signer = useSigner();
 const storage = useStorage();
-const contractAdress = "0x0480Add3a7f7FeCb894325b19c19a7a9D35BF33c";
+const contractAdress = "0xcF6A5dcf7463C23b67A9BA4bfCc305Ef68FbaAF9";
 
 
 
@@ -38,14 +38,19 @@ async function uploadData() {
     } else {
       const contract = new ethers.Contract(contractAdress, NFT, signer);
       const URI = await contract.getAllTokenURIs();   
+      console.log(URI);
 
-      if(!URI[0]){
+      if(!URI){
         alert('You have not minted any NFTs yet')
       }else{
         const length = URI.length;
         const NFT_info = [];
+        console.log(URI)
         
         for (let i = 0; i < length; i++) {
+          if (URI[i] === '') {
+            continue;
+          }
           let data = await storage.download(URI[i]);
           let metadataResponse = await fetch(data.url);
           let metadata = await metadataResponse.json();
