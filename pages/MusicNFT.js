@@ -10,7 +10,7 @@ import NFT from '@/abi/NFT.json';
 
 export default function MusicNFT() {
 
-    const contractAdress = "0x0480Add3a7f7FeCb894325b19c19a7a9D35BF33c";
+    const contractAdress = "0xff6c949559d791b425739cd668bEED071b979b8a";
     const [track, setTrack] = useState('')
     const [artist, setArtist] = useState('')
     const [year, setYear] = useState('')
@@ -85,6 +85,9 @@ export default function MusicNFT() {
       }
     }catch(err){
       console.log(err)
+      setTrack('');
+        setArtist('');
+        setYear('');
       setLoading(false);
       
   }
@@ -93,7 +96,9 @@ export default function MusicNFT() {
   return (
     <>
     <Navbar/>
+
     <Container>
+  
     
       {loading == false ? (
         <LoginForm>

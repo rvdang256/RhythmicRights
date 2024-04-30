@@ -86,36 +86,6 @@ return (
   
     
       <CardWrapper>
-        {/* <Card>
-          <CardFront className="card-front">
-            <CardImage src="https://image.tmdb.org/t/p/original/lr3cYNDlJcpT1EWzFH42aSIvkab.jpg" alt="Dune: Part One (2021) movie poster" />
-          </CardFront>
-          <CardBack className="card-back">
-            <CardTitle>Dune: Part One (2021)</CardTitle>
-            <CardDirector>Denis Villeneuve</CardDirector>
-            <CardDescription>
-              Track: {track}
-              <audio controls>
-      <source src="https://d54e8aaf1f167dbfd847c6ea03edce74.ipfscdn.io/ipfs/bafybeib3xqh7lv3o4fnntte6c7hegvggcx22wn7z43tipio4hpi3by4sva/file_example_MP3_5MG.mp3" type="audio/mpeg"/>
-      Your browser does not support the audio element.
-    </audio>
-            </CardDescription>
-            
-          </CardBack>
-        </Card>
-        <Card>
-          <CardFront className="card-front">
-            <CardImage src="https://image.tmdb.org/t/p/original/mFnF8tpPMqEwti2J2aMhYGZYdv0.jpg" alt="Dune: Part Two (2024) movie poster" />
-          </CardFront>
-          <CardBack className="card-back">
-            <CardTitle>Dune: Part Two (2024)</CardTitle>
-            <CardDirector>Denis Villeneuve</CardDirector>
-            <CardDescription>
-              Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.
-            </CardDescription>
-          </CardBack>
-        </Card>
-       */}
     
 
     {NFTs && NFTs.map((nft, index) => (
