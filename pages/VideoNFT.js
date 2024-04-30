@@ -38,25 +38,26 @@ async function uploadData() {
     } else {
       const contract = new ethers.Contract(contractAdress, NFT, signer);
       const URI = await contract.getAllTokenURIs();   
+
+      if(!URI[0]){
+        alert('You have not minted any NFTs yet')
+      }else{
+        const length = URI.length;
+        const NFT_info = [];
+        
+        for (let i = 0; i < length; i++) {
+          let data = await storage.download(URI[i]);
+          let metadataResponse = await fetch(data.url);
+          let metadata = await metadataResponse.json();
+          console.log(metadata);
+          NFT_info.push(metadata);
+        }
+        console.log(NFT_info);
+        setNFTs(NFT_info);
+        
+        
+      }
 }
-  if(!URI[0]){
-    alert('You have not minted any NFTs yet')
-  }else{
-    const length = URI.length;
-    const NFT_info = [];
-    
-    for (let i = 0; i < length; i++) {
-      let data = await storage.download(URI[i]);
-      let metadataResponse = await fetch(data.url);
-      let metadata = await metadataResponse.json();
-      console.log(metadata);
-      NFT_info.push(metadata);
-    }
-    console.log(NFT_info);
-    setNFTs(NFT_info);
-    
-    
-  }
 }catch (error) {
   console.log(error);
 
@@ -69,12 +70,16 @@ return (
 <>
 <Navbar/>
 
+
 <Wrapper>
+
+<Container>
 
 <Heading>See Your Minted NFTs!</Heading>
 
   
   <Button onClick={uploadData}>See NFTs</Button>
+  
 
 
   
@@ -135,7 +140,8 @@ return (
     ))}
 
   </CardWrapper>
-  
+  </Container>
+
   </Wrapper>
 
   
@@ -147,15 +153,34 @@ return (
 
 }
 
-const Heading = styled.h1`
-font-size: 24px;
-margin-bottom: 20px;
-font-family: "Gill Sans", sans-serif;
-color: white;
 
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: auto;
+  justify-content: flex-start; /* Change to flex-start */
+  margin-bottom: 20px;
+  align-items: center;
+  position: absolute; /* Added */
+  top: 50px; /* Added */
+  left: 50%; /* Added */
+  transform: translateX(-50%); /* Added */
+`;
+
+const Heading = styled.h1`
+  ffont-size: 24px;
+  margin-bottom: 20px;
+  font-family: "Gill Sans", sans-serif;
+  color: white;
+  margin-top: 70px; /* Adjusted margin-top value */
+  
 `;
 
 const Button = styled.button`
+  margin-top: 10px; 
+  
   --b: 3px;   /* border thickness */
   --s: .15em; /* size of the corner */
   --c: #12a9e0;
@@ -191,8 +216,7 @@ const Button = styled.button`
 `;
 
 const Wrapper = styled.div`
-
-       position: relative;
+    position: relative;
     display: grid;
     place-items: center;
     height: 200vh;
