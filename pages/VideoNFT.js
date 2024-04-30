@@ -40,12 +40,12 @@ async function uploadData() {
       const URI = await contract.getAllTokenURIs();   
       console.log(URI);
 
-      if(!URI){
+      if(URI.length === 0){
         alert('You have not minted any NFTs yet')
       }else{
         const length = URI.length;
         const NFT_info = [];
-        console.log(URI)
+
         
         for (let i = 0; i < length; i++) {
           if (URI[i] === '') {
@@ -57,7 +57,12 @@ async function uploadData() {
           console.log(metadata);
           NFT_info.push(metadata);
         }
+
+        
         console.log(NFT_info);
+        if (NFT_info.length === 0) {
+          alert('You have not minted any NFTs yet')
+        }
         setNFTs(NFT_info);
         
         
