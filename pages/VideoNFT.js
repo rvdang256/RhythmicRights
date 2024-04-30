@@ -33,10 +33,14 @@ const contractAdress = "0x0480Add3a7f7FeCb894325b19c19a7a9D35BF33c";
 const [file, setFile] = useState(null);
 async function uploadData() {
   try {
-  const contract = new ethers.Contract(contractAdress, NFT, signer);
-  const URI = await contract.getAllTokenURIs();
+    if (signer == null) {
+      alert('Please connect wallet')
+    } else {
+      const contract = new ethers.Contract(contractAdress, NFT, signer);
+      const URI = await contract.getAllTokenURIs();   
+}
   if(!URI[0]){
-    alert('Boof')
+    alert('You have not minted any NFTs yet')
   }else{
     const length = URI.length;
     const NFT_info = [];
@@ -66,10 +70,11 @@ return (
 <Navbar/>
 
 <Wrapper>
-{/* <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/> */}
 
-  <button onClick={uploadData}>See NFTs</button>
+<Heading>See Your Minted NFTs!</Heading>
 
+  <button onClick={uploadData}></button>
+  <Button onClick={uploadData}>See NFTs</Button>
 
 
   
@@ -142,18 +147,74 @@ return (
 
 }
 
+const Heading = styled.h1`
+font-size: 24px;
+margin-bottom: 20px;
+font-family: "Gill Sans", sans-serif;
+color: white;
+
+`;
+
+const SearchButton = styled.button`
+  --b: 3px;   /* border thickness */
+  --s: .15em; /* size of the corner */
+  --c: #12a9e0;
+  
+  padding: 10px 20px;
+  color: var(--c);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b), #0000 90deg, var(--c) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .2em;
+  font-family: system-ui, sans-serif;
+  font-weight: bold;
+
+  cursor: pointer;
+  border: none;
+  margin: .1em;
+  margin-left: 10px;
+
+  &:hover,
+  &:focus-visible {
+    --_p: 0px;
+    outline-color: var(--c);
+    outline-offset: .05em;
+  }
+
+  &:active {
+    background: var(--c);
+    color: #fff;
+  }
+`;
+
 const Wrapper = styled.div`
 
-
-  
+       position: relative;
     display: grid;
     place-items: center;
     height: 200vh;
     font-family: system-ui;
-    background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80');
-    background-size: cover;
-    background-position: center;
-    backdrop-filter: blur(400px);
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80');
+        background-size: cover;
+        background-position: center;
+        filter: blur(5px); /* Adjust the blur value as needed */
+        z-index: -1; /* Ensure the background is behind other content */
+
+    }
+    
+    &::after {
     
     
     
