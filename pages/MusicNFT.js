@@ -47,8 +47,11 @@ export default function MusicNFT() {
   async function uploadData() {
     try{
       if(audioFiles.length === 0 || visualFiles.length === 0 || track === '' || artist === '' || year === '') {
-        alert('Please upload a file')
-      }else{
+        alert('Please fill out all fields and upload files')
+      }else if(signer == null){
+        alert('Please connect wallet')
+      }
+      else{
         setLoading(true);
 
         const metadata = {
@@ -75,6 +78,9 @@ export default function MusicNFT() {
         await tx.wait();
         console.log("NFT Minted!");
         alert('NFT Minted!')
+        setTrack('');
+        setArtist('');
+        setYear('');
         setLoading(false);
       }
     }catch(err){

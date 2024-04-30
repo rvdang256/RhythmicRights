@@ -27,11 +27,9 @@ export default function Home() {
   const {user, setUser} = useStateContext();
 
   function handleButtonClick() {
-    if (user != null) {
-      router.push('/MusicNFT');}
-      else{
-        router.push('/Login');;
-      }
+    
+      router.push('/MusicNFT');
+    
     
   }
   return (

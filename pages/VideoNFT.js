@@ -115,8 +115,9 @@ return (
         </CardFront>
         <CardBack className="card-back">
           <CardTitle>{nft.name}</CardTitle>
+          <CardDirector> Artist: {nft.artist} <br /> Year: {nft.year}</CardDirector>
           <CardDescription>
-            Artist: {nft.artist} <br /> Year: {nft.year}
+           
             <audio controls>
               <source src={nft.audio} type="audio/mpeg" />
               Your browser does not support the audio element.
@@ -147,12 +148,12 @@ const Wrapper = styled.div`
   
     display: grid;
     place-items: center;
-    height: 105vh;
+    height: 200vh;
     font-family: system-ui;
     background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80');
     background-size: cover;
     background-position: center;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(400px);
     
     
     

@@ -6,10 +6,10 @@ import { ConnectWallet, useSigner, useStorage, usedo} from "@thirdweb-dev/react"
 
 import { darkTheme, lightTheme } from "@thirdweb-dev/react";
  
-const customDarkTheme = darkTheme({
+const customDarkTheme = lightTheme({
   fontFamily: "Inter, sans-serif",
   colors: {
-    modalBg: "#000000",
+    modalBg: "white",
     accentText: "blue",
   },
 });
@@ -32,11 +32,9 @@ const Navbar = () => {
   }
 
   function handleMusicClick() {
-    if (user != null) {
-      router.push('/MusicNFT');}
-      else{
-        router.push('/Login');
-      }
+    
+      router.push('/MusicNFT');
+  
     
 
   }
@@ -65,16 +63,17 @@ const Navbar = () => {
 
           
           <NavigationElement onClick={handleHomeClick}>Home</NavigationElement>
-          <NavigationElement onClick={handleMusicClick}>Music NFT</NavigationElement>
-          <NavigationElement onClick={handleVideoClick}>Video NFT</NavigationElement>
+          <NavigationElement onClick={handleMusicClick}>Mint NFT</NavigationElement>
+          <NavigationElement onClick={handleVideoClick}>See NFT</NavigationElement>
           {user && 
           <LoginButton onClick={handleSignOutClick}>Sign Out</LoginButton>}
-          {user != null ?
+          {/* {user != null ?
           <User>{user.email}</User>
           : // no logged in user
-          <LoginButton onClick={handleLoginClick}>Login</LoginButton>}
+          <LoginButton onClick={handleLoginClick}>Login</LoginButton>} */}
+          <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
         </NavigationButtonHolder>
-        <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
+        
         
       </Holder>
     </Container>
