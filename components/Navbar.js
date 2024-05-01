@@ -46,7 +46,7 @@ const Navbar = () => {
   }
 
   function handleVideoClick() {
-    router.push('/VideoNFT');
+    router.push('/SeeNFT');
   }
 
   

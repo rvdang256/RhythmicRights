@@ -19,7 +19,7 @@ const customDarkTheme = darkTheme({
 
 
 
-export default function VideoNFT() {
+export default function SeeNFT() {
 const [image, setImage] = useState(null);
 const [NFTs, setNFTs] = useState(null);
 const [track, setTrack] = useState('')
@@ -164,7 +164,7 @@ const Button = styled.button`
   --s: .15em; /* size of the corner */
   --c: #12a9e0;
   
-  padding: 10px 20px;
+  padding: 15px 30px;
   color: var(--c);
   --_p: var(--s);
   background:
@@ -238,7 +238,7 @@ const Card = styled.div`
   width: 326px;
   place-items: center;
   z-index: 2;
-  aspect-ratio: 50/75;
+  aspect-ratio: 75/75;
   isolation: isolate;
   position: relative;
   transform-style: preserve-3d;
@@ -269,12 +269,14 @@ const CardFront = styled.div`
 
 const CardImage = styled.img`
   max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 `;
 
 const CardBack = styled.div`
   aspect-ratio: inherit;
   transition: inherit;
-  width: 100%;
+  width: 86%;
   border-radius: 0.75rem;
   inset: 0;
   position: absolute;
@@ -288,6 +290,7 @@ const CardBack = styled.div`
   transform: rotateY(-180deg);
   backdrop-filter: blur(4px);
   color: white;
+  object-fit: cover;
 `;
 
 const CardTitle = styled.h3`
@@ -302,17 +305,6 @@ const CardDescription = styled.p`
   margin-bottom: 0;
 `;
 
-const StyledAudio = styled.audio`
-  width: 200px; /* Set width */
-  
-  background-color: #f2f2f2; /* Background color */
-  border: 1px solid #ccc; /* Border */
-  border-radius: 5px; /* Border radius */
-  padding: 10px; /* Padding */
 
-  
-
-  
-`;
 
 
