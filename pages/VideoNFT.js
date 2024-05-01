@@ -89,13 +89,12 @@ return (
 
   
   <Button onClick={uploadData}>See NFTs</Button>
-  
 
 
-  
-  
+  <br></br>
+  <br></br>
     
-      <CardWrapper>
+    <CardWrapper>
     
 
     {NFTs && NFTs.map((nft, index) => (

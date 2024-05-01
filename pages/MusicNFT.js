@@ -196,7 +196,7 @@ const Container = styled.div`
   `;
 
 
-const LoginForm = styled.div`
+  const LoginForm = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(5, 5, 5, 1);
@@ -205,8 +205,11 @@ const LoginForm = styled.div`
   height: auto;
   align-items: center;
   position: absolute;
-  margin-top: auto;
+  top: 300px; /* Adjust this value according to your Navbar height */
+  left: 50%;
+  transform: translateX(-50%);
   width: 50%;
+  z-index: 1000; /* Ensure the form is above other content */
 `;
 
 const Title = styled.h2`
