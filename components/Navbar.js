@@ -5,7 +5,8 @@ import { useStateContext } from '@/context/StateContext';
 import { ConnectWallet, useSigner, useStorage, usedo} from "@thirdweb-dev/react";
 
 import { darkTheme, lightTheme } from "@thirdweb-dev/react";
- 
+
+//Custom dark theme
 const customDarkTheme = lightTheme({
   fontFamily: "Inter, sans-serif",
   colors: {
@@ -19,12 +20,9 @@ const customDarkTheme = lightTheme({
 const Navbar = () => {
   
   
-  const {user, setUser} = useStateContext();
+
   const router = useRouter();
 
-  function handleLoginClick() {
-    router.push('/Login');
-  }
 
   function handleHomeClick() {
     router.push('/');
@@ -39,11 +37,7 @@ const Navbar = () => {
 
   }
 
-  function handleSignOutClick(){
-    setUser(null);
-    router.push('/');
-
-  }
+  
 
   function handleVideoClick() {
     router.push('/SeeNFT');
@@ -65,12 +59,7 @@ const Navbar = () => {
           <NavigationElement onClick={handleHomeClick}>Home</NavigationElement>
           <NavigationElement onClick={handleMusicClick}>Mint NFT</NavigationElement>
           <NavigationElement onClick={handleVideoClick}>See NFT</NavigationElement>
-          {user && 
-          <LoginButton onClick={handleSignOutClick}>Sign Out</LoginButton>}
-          {/* {user != null ?
-          <User>{user.email}</User>
-          : // no logged in user
-          <LoginButton onClick={handleLoginClick}>Login</LoginButton>} */}
+
           <ConnectWallet theme={customDarkTheme} connectModal={{ size: "wide" }}/>
         </NavigationButtonHolder>
         

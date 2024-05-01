@@ -20,16 +20,14 @@ import {
 
 
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
-  const {user, setUser} = useStateContext();
+
 
   function handleButtonClick() {
     
       router.push('/MusicNFT');
-    
     
   }
   return (
@@ -52,8 +50,8 @@ export default function Home() {
         
 
         
-
-        <StageCubeContainer>
+      {/* Cube Spinner */}
+      <StageCubeContainer>
         <CubeSpinner>
           <Face1>
             <FontAwesomeIcon icon={faSoundcloud} />
@@ -111,6 +109,7 @@ min-width: fit-content;
 margin-bottom: 20px;
 `;
 
+//Code for spinning cube
 const spinCube = keyframes`
   from, to {
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
@@ -154,6 +153,7 @@ const CubeSpinner = styled.div`
   margin-left: calc(50% - 100px);
 `;
 
+
 const Face = styled.div`
   position: absolute;
   width: 200px;
@@ -168,6 +168,7 @@ const Face = styled.div`
   box-shadow: 0 0 20px 0px lightyellow;
 `;
 
+//Different faces of the cube
 const Face1 = styled(Face)`
   transform: translateZ(100px);
   color: orange;

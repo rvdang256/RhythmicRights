@@ -9,15 +9,18 @@ import NFT from '@/abi/NFT.json';
 
 
 export default function MusicNFT() {
-
+    // address for smart contract
     const contractAdress = "0xcF6A5dcf7463C23b67A9BA4bfCc305Ef68FbaAF9";
+
+    // keeps track of the track name, artist, year, and loading state
     const [track, setTrack] = useState('')
     const [artist, setArtist] = useState('')
     const [year, setYear] = useState('')
     const [loading, setLoading] = useState(false)
     const signer = useSigner();
-    
-  
+
+    //code is from Evergreen UI
+    // keeps track of the audio files and their rejections
     const [audioFiles, setAudioFiles] = React.useState([])
     const [fileRejections, setFileRejections] = React.useState([])
     const handleChange = React.useCallback((files) => setAudioFiles([files[0]]), [])
@@ -27,7 +30,7 @@ export default function MusicNFT() {
       setFileRejections([])
     }, []);
 
-
+    // keeps track of the visual files and their rejections
     const [visualFiles, setVisualFiles] = React.useState([])
     const [visualFileRejections, setVisualFileRejections] = React.useState([])
     const handleVisualChange = React.useCallback((files) => setVisualFiles([files[0]]), [])
@@ -37,7 +40,8 @@ export default function MusicNFT() {
       setVisualFileRejections([])
     }, []);
 
-
+  
+  // initialize the storage from thirdweb
   const { mutateAsync: upload, isLoading } = useStorageUpload();
 
 
@@ -46,14 +50,16 @@ export default function MusicNFT() {
 
   async function uploadData() {
     try{
+      // check if all fields are filled out
       if(audioFiles.length === 0 || visualFiles.length === 0 || track === '' || artist === '' || year === '') {
         alert('Please fill out all fields and upload files')
-      }else if(signer == null){
+      }else if(signer == null){ // check if wallet is connected
         alert('Please connect wallet')
       }
       else{
+      
         setLoading(true);
-
+        // metadata for the NFT
         const metadata = {
           name: track,
           artist: artist,
@@ -61,7 +67,7 @@ export default function MusicNFT() {
           audio: audioFiles[0],
           visual: visualFiles[0]
         }
-        
+        // upload the metadata to the thirdweb storage
         const uris = await upload({ 
           data: [metadata], 
           options: {
@@ -73,11 +79,16 @@ export default function MusicNFT() {
         
         console.log(uris[0]);
         
+        // Calls the contract to mint the NFT
         const contract = new ethers.Contract(contractAdress, NFT, signer);
         const tx = await contract.safeMint(uris[0]);
         await tx.wait();
+
+
         console.log("NFT Minted!");
         alert('NFT Minted!')
+
+        // reset the fields and loading state
         setTrack('');
         setArtist('');
         setYear('');
@@ -101,7 +112,7 @@ export default function MusicNFT() {
   
     
       {loading == false ? (
-        <LoginForm>
+        <UploadForm>
         
           <Title>Create NFT</Title>
     
@@ -159,11 +170,11 @@ export default function MusicNFT() {
             />
           </Pane>
     
-          <LoginButton onClick={uploadData}>Upload</LoginButton>
-          </LoginForm>
+          <UploadButton onClick={uploadData}>Upload</UploadButton>
+        </UploadForm>
         
       ) :
-      
+            // Loading spinner
             <LdsGrid>
               <LdsGridItem />
               <LdsGridItem />
@@ -196,7 +207,7 @@ const Container = styled.div`
   `;
 
 
-  const LoginForm = styled.div`
+  const UploadForm = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(5, 5, 5, 1);
@@ -229,7 +240,7 @@ const Input = styled.input`
   
 `;
 
-const LoginButton = styled.button`
+const UploadButton = styled.button`
   width: 100%;
   padding: 10px;
   border: none;

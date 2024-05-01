@@ -20,27 +20,30 @@ const customDarkTheme = darkTheme({
 
 
 export default function SeeNFT() {
-const [image, setImage] = useState(null);
+//List of all the NFTs minted by the user
 const [NFTs, setNFTs] = useState(null);
-const [track, setTrack] = useState('')
+
+// initialize the storage and signer from thirdweb
 const signer = useSigner();
 const storage = useStorage();
+
+// address for smart contract
 const contractAdress = "0xcF6A5dcf7463C23b67A9BA4bfCc305Ef68FbaAF9";
 
 
 
 
-const [file, setFile] = useState(null);
+// function to get all the NFTs minted by the user
 async function uploadData() {
   try {
-    if (signer == null) {
+    if (signer == null) {// check if wallet is connected
       alert('Please connect wallet')
     } else {
       const contract = new ethers.Contract(contractAdress, NFT, signer);
-      const URI = await contract.getAllTokenURIs();   
+      const URI = await contract.getAllTokenURIs();    //list of all the URIS
       console.log(URI);
 
-      if(URI.length === 0){
+      if(URI.length === 0){// check if the user has minted any NFTs
         alert('You have not minted any NFTs yet')
       }else{
         const length = URI.length;
@@ -48,7 +51,7 @@ async function uploadData() {
 
         
         for (let i = 0; i < length; i++) {
-          if (URI[i] === '') {
+          if (URI[i] === '') {// check if there are any empty strings in the URI is empty
             continue;
           }
           let data = await storage.download(URI[i]);
@@ -60,7 +63,7 @@ async function uploadData() {
 
         
         console.log(NFT_info);
-        if (NFT_info.length === 0) {
+        if (NFT_info.length === 0) {// check if the user has minted any NFTs
           alert('You have not minted any NFTs yet')
         }
         setNFTs(NFT_info);
@@ -96,7 +99,7 @@ return (
     
     <CardWrapper>
     
-
+    {/* check if the user has minted any NFTs and if they have, display the image and audio of nft*/}
     {NFTs && NFTs.map((nft, index) => (
       <Card key={index}>
         <CardFront className="card-front">
